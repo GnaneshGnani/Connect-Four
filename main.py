@@ -9,23 +9,18 @@ from dqn import DQNAgent
 from utils import plot_metrics
 from environment import ConnectFourEnv
 
-try:
-    from clearml import Task, Model
-
-except ImportError:
-    Task = None
-    Model = None
+from clearml import Task, Model
 
 warnings.filterwarnings("ignore", category = FutureWarning, message = ".*weights_only.*")
 
 PROJECT_NAME = "Connect Four"
 
-def train_agent(agent, episodes = 10000, save_path = "models/agent.pth", save_frequency = None, task = None):
+def train_agent(agent, episodes = 10000, save_path = "models/agent.pth", save_frequency = None, task = None, quick_step_reward = False):
     logger = task.get_logger() if task else None
     save_frequency = episodes // 10 if save_frequency is None else save_frequency
     os.makedirs(os.path.dirname(save_path) if os.path.dirname(save_path) else ".", exist_ok = True)
 
-    env = ConnectFourEnv(render_mode = None)
+    env = ConnectFourEnv(render_mode = None, quick_step_reward = quick_step_reward)
 
     metrics = {
         "ep_rewards": [],
@@ -280,6 +275,10 @@ def get_args():
         formatter_class = argparse.ArgumentDefaultsHelpFormatter
     )
 
+    # --- Env ---
+    parser.add_argument("--quick-step-reward", action = "store_false",
+                        help = "Allow Quick Step Negative Rewards")
+
     # --- Execution ---
     parser.add_argument("--episodes", type = int, default = 50000,
                         help = "Number of episodes to train")
@@ -411,7 +410,8 @@ def main(args):
             episodes = args.episodes,
             save_path = args.agent_path,
             save_frequency = args.save_frequency,
-            task = task
+            task = task,
+            quick_step_reward = args.quick_step_reward
         )
     else:
         print("Skipping training (--no-train flag set)")

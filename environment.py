@@ -7,13 +7,15 @@ import gymnasium as gym
 from gymnasium import spaces
 
 class ConnectFourEnv(gym.Env):
-    def __init__(self, render_mode = None):
+    def __init__(self, render_mode = None, quick_step_reward = False):
         super().__init__()
         self.rows = 6
         self.cols = 7
         self.connect = 4
         self.action_space = spaces.Discrete(self.cols)
         self.observation_space = spaces.Box(low = -1, high = 1, shape = (self.rows, self.cols), dtype = np.float16)
+
+        self.quick_step_reward = quick_step_reward
         
         self.render_mode = render_mode  # 'human' for GUI, 'text' for terminal, None for no render
         self.pygame = None
@@ -59,6 +61,8 @@ class ConnectFourEnv(gym.Env):
             return self.board.copy(), 0, True, {"draw": True}
         
         reward = self.get_heuristic_reward(row, action)
+        if self.quick_step_reward:
+            reward -= 0.01
         
         self.current_player *= -1
         return self.board.copy(), reward, False, {}
