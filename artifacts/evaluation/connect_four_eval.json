@@ -1,0 +1,40 @@
+{
+  "generated_at": "2026-05-22T03:12:44.475445+00:00",
+  "seed": 642,
+  "checkpoint": {
+    "path": "models/agent.pth",
+    "exists": true,
+    "tracked_in_git": false,
+    "note": "The local checkpoint is ignored by git; reproduce by training or placing a checkpoint at this path."
+  },
+  "summary": {
+    "agent_games": 200,
+    "agent_overall_win_rate": 0.85,
+    "agent_overall_loss_rate": 0.15,
+    "agent_overall_draw_rate": 0.0,
+    "agent_as_first": {
+      "games": 100,
+      "agent_player": 1,
+      "agent_win_rate": 0.91,
+      "agent_loss_rate": 0.09,
+      "draw_rate": 0.0,
+      "avg_steps": 13.31
+    },
+    "agent_as_second": {
+      "games": 100,
+      "agent_player": -1,
+      "agent_win_rate": 0.79,
+      "agent_loss_rate": 0.21,
+      "draw_rate": 0.0,
+      "avg_steps": 14.95
+    },
+    "random_vs_random": {
+      "games": 100,
+      "first_player_win_rate": 0.56,
+      "second_player_win_rate": 0.44,
+      "draw_rate": 0.0,
+      "avg_steps": 20.98
+    }
+  },
+  "claim_guidance": "This is a deterministic local checkpoint-vs-random evaluation. It supports claiming an evaluation harness and checked-in eval report, but the checkpoint itself is not tracked in git."
+}

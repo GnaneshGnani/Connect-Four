@@ -127,4 +127,20 @@ docker run --rm -it \
 
 ## Evidence Status
 
-This repository contains the environment, agent implementations, training loop, checkpointing, plotting hooks, and Docker workflow. It does not currently include a checked-in benchmark report or win-rate evaluation artifact, so README/resume claims should describe implementation scope rather than model strength.
+This repository contains the environment, agent implementations, training loop, checkpointing, plotting hooks, Docker workflow, and a checked-in evaluation report. Resume claims should still avoid treating the result as a published benchmark because the evaluated checkpoint is not tracked in git.
+
+## Evaluation Artifact
+
+`artifacts/evaluation/connect_four_eval.json` records a deterministic local
+checkpoint-vs-random evaluation:
+
+- 200 agent-vs-random games with seed 642
+- 85.0% overall win rate against random legal moves
+- 91.0% win rate as first player
+- 79.0% win rate as second player
+- random-vs-random baseline: 56.0% first-player win rate
+
+The checkpoint used for this report lives at `models/agent.pth`, which is
+ignored by git because model files can be regenerated. Treat the report as
+evidence of an evaluation harness and local checkpoint result, not as a
+published benchmark unless the checkpoint is also provided.
